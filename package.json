@@ -2,14 +2,15 @@
   "name": "projeto-app-flow",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "start:dev": "tsx src/server.ts",
-    "start:watch": "tsx watch src/server.ts",
+    "start:dev": "tsx --env-file=.env src/server.ts",
+    "start:watch": "tsx watch --env-file=.env src/server.ts",
     "dist": "tsup src",
-    "start:dist": "npm run dist && node/server.js"
+    "start:dist": "npm run dist &&  --env-file=.env node/server.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   "homepage": "https://github.com/LucasManera2017/GerenciadorDePodCasts#readme",
   "description": "",
   "devDependencies": {
+    "@types/node": "^24.3.0",
     "tsup": "^8.5.0",
     "tsx": "^4.20.4",
     "typescript": "^5.9.2"
