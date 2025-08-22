@@ -1,11 +1,24 @@
-import { IncomingMessage } from "http";
+import { FilterPodcastModel } from "../models/filter-podcast-model";
 import { repoPodcasts } from "../repositories/podcasts-repository";
+import { StatusCode } from "../utils/status-code";
 
 
-export const serviceFilterEpisodes = async (podcastName: string | undefined) => {
+export const serviceFilterEpisodes = async (podcastName: string | undefined): Promise<FilterPodcastModel> => {
 
+  //define a interface de retorno
+  let responseFormat: FilterPodcastModel = {
+    statusCode: 200,
+    body: []
+  };
+
+  //buscando os dados
   const queryString = podcastName?.split("?p=")[1] ?? "";
-
   const data = await repoPodcasts(queryString);
-  return data
+
+  //verifico se tem conteudo
+  responseFormat.statusCode = data.length !== 0 ? StatusCode.OK : StatusCode.NOT_FOUND;
+
+  responseFormat.body = data;
+
+  return responseFormat;
 }
